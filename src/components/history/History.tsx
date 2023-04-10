@@ -1,8 +1,8 @@
-import React from 'react';
-import { History as HistoryInterface } from '../../interfaces/history';
-import { Ps1 } from '../ps1';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
+import React from "react";
+import { History as HistoryInterface } from "../../interfaces/history";
+import { Ps1 } from "../ps1";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 interface Props {
   history: Array<HistoryInterface>;
@@ -21,14 +21,21 @@ export const History: React.FC<Props> = ({ history }) => {
             <div className="flex-grow">{entry.command}</div>
           </div>
 
-          <ReactMarkdown
-            className="whitespace-pre-wrap mb-2"
-            remarkPlugins={[gfm]}
-            // style={{ lineHeight: 'normal' }
-            // dangerouslySetInnerHTML={}
-          >
-            {entry.output}
-          </ReactMarkdown>
+          {entry.command == "about" || entry.command == "banner" ? (
+            <ReactMarkdown
+              className="whitespace-pre-wrap mb-2"
+              remarkPlugins={[gfm]}
+              linkTarget="_blank"
+            >
+              {entry.output}
+            </ReactMarkdown>
+          ) : (
+            <p
+              className="whitespace-pre-wrap mb-2"
+              style={{ lineHeight: "normal" }}
+              dangerouslySetInnerHTML={{ __html: entry.output }}
+            />
+          )}
         </div>
       ))}
     </>
